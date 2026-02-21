@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Compressor - Fast, Private, Browser-Based</title>
+  <meta name="description"
+    content="Compress your videos easily with our free online video compressor. Reduce file size while maintaining quality. No uploads to servers - all processing happens in your browser.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="container">
+    <!-- Header Section -->
+    <header class="header section">
+      <h1>
+        <span class="gradient-text">Video Compressor</span>
+      </h1>
+      <p>Compress videos instantly in your browser - No uploads, 100% private</p>
+    </header>
+
+    <!-- Main Application -->
+    <main class="glass-card">
+
+      <!-- Upload Zone -->
+      <div class="upload-zone" id="uploadZone">
+        <div class="upload-icon">🎬</div>
+        <h3>Drop your video here</h3>
+        <p>or click to browse</p>
+        <input type="file" id="fileInput" class="file-input" accept="video/*">
+      </div>
+
+      <!-- File Info -->
+      <div class="file-info" id="fileInfo">
+        <div class="file-info-content">
+          <div>🎥</div>
+          <div class="file-details">
+            <div class="file-name" id="fileName">video.mp4</div>
+            <div class="file-size" id="fileSize">0 MB</div>
+          </div>
+          <button class="btn btn-secondary" id="changeFileBtn">Change File</button>
+        </div>
+      </div>
+
+      <!-- Settings Panel -->
+      <div class="settings-panel" id="settingsPanel">
+
+        <!-- Compression Mode Toggle -->
+        <div class="settings-group">
+          <h4>Compression Mode</h4>
+          <div class="mode-toggle">
+            <button class="mode-btn active" id="modeQuality" data-mode="quality">
+              <span>🎯 Quality-Based</span>
+            </button>
+            <button class="mode-btn" id="modeTargetSize" data-mode="targetsize">
+              <span>📏 Target Size</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Quality-Based Settings (Default) -->
+        <div class="mode-content" id="qualityModeContent">
+          <div class="settings-group">
+            <h4>Compression Quality</h4>
+            <div class="preset-buttons">
+              <button class="preset-btn" id="presetHigh" data-preset="high">
+                <div>🎯 High Quality</div>
+                <small style="color: var(--color-text-muted); font-size: var(--font-size-xs);">80% size</small>
+              </button>
+              <button class="preset-btn active" id="presetMedium" data-preset="medium">
+                <div>⚖️ Medium</div>
+                <small style="color: var(--color-text-muted); font-size: var(--font-size-xs);">50% size</small>
+              </button>
+              <button class="preset-btn" id="presetLow" data-preset="low">
+                <div>📦 Maximum</div>
+                <small style="color: var(--color-text-muted); font-size: var(--font-size-xs);">30% size</small>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Target Size Settings -->
+        <div class="mode-content" id="targetSizeModeContent" style="display: none;">
+          <div class="settings-group">
+            <h4>Target File Size</h4>
+            <div class="target-size-input-group">
+              <input type="number" id="targetSizeInput" class="target-size-input" placeholder="50" min="1" value="50">
+              <select id="targetSizeUnit" class="target-size-unit">
+                <option value="MB">MB</option>
+                <option value="KB">KB</option>
+              </select>
+            </div>
+            <p class="help-text">Enter desired output file size</p>
+          </div>
+        </div>
+
+        <!-- Codec Selection -->
+        <div class="settings-group">
+          <h4>Video Codec</h4>
+          <select id="codecSelect" class="codec-select">
+            <option value="h264">H.264 (Best compatibility, fast)</option>
+            <option value="vp9">VP9 (Open source, good compression, WebM output)</option>
+          </select>
+          <p class="help-text">H.264 works everywhere. VP9 offers better compression but outputs WebM format.</p>
+        </div>
+
+        <div class="text-center">
+          <button class="btn" id="compressBtn">
+            <span>🚀 Compress Video</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Progress Section -->
+      <div class="progress-section" id="progressSection">
+        <div class="progress-header">
+          <div class="progress-status" id="progressStatus">Compressing...</div>
+          <div class="progress-percentage" id="progressPercentage">0%</div>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- Results Section -->
+      <div class="results-section" id="resultsSection">
+        <h3 class="mb-md text-center">✨ Compression Complete!</h3>
+
+        <div class="results-comparison">
+          <div class="result-card">
+            <div class="result-label">Original Size</div>
+            <div class="result-value" id="originalSize">0 MB</div>
+          </div>
+
+          <div class="result-card">
+            <div class="result-label">Compressed Size</div>
+            <div class="result-value" id="compressedSize">0 MB</div>
+          </div>
+
+          <div class="result-card">
+            <div class="result-label">Saved</div>
+            <div class="result-value" id="savedSize">0 MB</div>
+            <div class="savings-badge" id="savingsPercentage">0% smaller</div>
+          </div>
+        </div>
+
+        <div class="download-area mt-lg">
+          <button class="btn" id="downloadBtn">
+            <span>💾 Download Compressed Video</span>
+          </button>
+          <div class="mt-lg">
+            <button class="btn btn-secondary" id="compressAnotherBtn">
+              <span>🔄 Compress Another Video</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Footer Info -->
+    <footer class="section text-center" style="color: var(--color-text-muted); font-size: var(--font-size-sm);">
+      <p>All processing happens locally in your browser. Your videos never leave your device.</p>
+      <p style="margin-top: var(--spacing-sm);">Powered by FFmpeg.wasm</p>
+    </footer>
+  </div>
+
+
+  <!-- Main Application Script -->
+  <script src="app.js"></script>
+</body>
+
+</html>
