@@ -14,7 +14,7 @@ console.log('FFmpeg path:', ffmpegPath);
 console.log('FFprobe path:', ffprobePath);
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Enable CORS
 app.use(cors());
