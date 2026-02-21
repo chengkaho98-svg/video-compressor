@@ -27,7 +27,8 @@ let targetSize = 50; // MB - matches HTML default
 let videoDuration = 0;
 
 // API Base URL
-const API_BASE = 'http://localhost:3000';
+// Use current origin if served via backend (Render), otherwise localhost for local testing
+const API_BASE = window.location.protocol === 'file:' ? 'http://localhost:3000' : '';
 
 // ============================================
 // DOM ELEMENTS
